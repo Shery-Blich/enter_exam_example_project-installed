@@ -10,6 +10,7 @@ import {
   ListItemText,
   TextField,
   Typography,
+  ToggleButtonGroup,
   ToggleButton,
 } from "@mui/material";
 
@@ -48,14 +49,17 @@ const TodoList = ({ todos, addTodo, updateToDo }) => {
                 secondary={todo.author}
                 data-testid={`todoListing-todo-${todo.id}`}
               />
-              <ToggleButton
+              <ToggleButtonGroup
                 color="primary"
                 value={todo.done ? "done" : "todo"}
                 exclusive
                 onChange={() => {
                     updateToDo(todo.id - 1, todo.title, !todo.done);
                 }}
-              >{todo.done ? "To do" : "Done"} </ToggleButton>
+              >
+
+                <ToggleButton  value={todo.done ? "done" : "todo"}>{todo.done ? "To Do" : "Done"}</ToggleButton>
+              </ToggleButtonGroup>
             </ListItem>
           ))}
         </List>

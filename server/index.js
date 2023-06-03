@@ -64,7 +64,7 @@ app.post('/todos', cors(corsOptions), (req, res) => {
     }
 
     const newTodo = {
-        title, id: uuidv4()
+        title, id: Todos.length + 1
     }
     Todos.push(newTodo);
     res.send({todo: newTodo}).status(200).end()

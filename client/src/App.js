@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "axios";
 
 const App = () => {
-  axios.defaults.withCredentials = false;
+  axios.defaults.withCredentials = true;
   const baseURL = "http://localhost:3080";
 
   const [userId, setUserId] = useState([]);
@@ -68,7 +68,6 @@ const App = () => {
 
   return (
     <div className="App">
-      <button onClick={() => putTodo(1,"Howdy!", false)}>Click me to put the first one!</button>
       <Router>
         <Routes>
           <Route
