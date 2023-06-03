@@ -1,9 +1,7 @@
 const express = require('express');
 const {Todos} = require("./model/Todos");
-const { v4: uuidv4 } = require("uuid");
 const app = express();
 app.use(express.json());
-const cookieParser = require("cookie-parser");
 var bodyParser = require('body-parser')
 const cors = require('cors');
 
@@ -13,7 +11,6 @@ const port = 3080;
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cookieParser());
 const corsOptions = {
     origin: `${baseUrl.client}`,
     credentials: true
@@ -34,23 +31,11 @@ app.put('/todos/:id', cors(corsOptions), (req, res) => {
 app.get("/", cors(corsOptions), (req, res) => {
     res.send("Welcome to your Wix Enter exam!");
 });
-
-app.get("/user", cors(corsOptions), (req, res) => {
-    const userId = req.cookies?.userId || uuidv4();
-    res.cookie("userId", userId).send({id: userId});
-});
-
 app.get('/todos', cors(corsOptions), (req, res) => {
     res.send({Todos});
 });
 
 app.post('/todos', cors(corsOptions), (req, res) => {
-    const userId = req.cookies?.userId;
-    if (!userId) {
-        res.status(403).end();
-        return;
-    }
-
     const {todo} = req.body;
     if (!todo) {
         res.status(400).json({message: 'Todo is missing'}).end();

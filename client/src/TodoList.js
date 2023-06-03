@@ -45,7 +45,7 @@ const TodoList = ({ todos, addTodo, updateToDo }) => {
               className={todo.done ? "done" : "todo"}
             >
               <ListItemText
-                primary={todo.title + " - " + todo.id}
+                primary={todo.title}
                 secondary={todo.author}
                 data-testid={`todoListing-todo-${todo.id}`}
               />

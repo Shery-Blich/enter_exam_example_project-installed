@@ -8,11 +8,9 @@ const App = () => {
   axios.defaults.withCredentials = true;
   const baseURL = "http://localhost:3080";
 
-  const [userId, setUserId] = useState([]);
   const [todos, setTodos] = useState([]);
 
   useEffect(() => {
-    getUser();
     getTodos();
   }, []);
 
@@ -49,17 +47,6 @@ const App = () => {
       )
       .then((response) => {
         setTodos([...todos, response.data.todo]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const getUser = () => {
-    axios
-      .get(`${baseURL}/user`)
-      .then((response) => {
-        setUserId(response.data.id);
       })
       .catch((error) => {
         console.log(error);
