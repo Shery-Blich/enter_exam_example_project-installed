@@ -24,7 +24,7 @@ const App = () => {
   const putTodo = (id, title, done) => {
     axios
       .put(
-        `${baseURL}/todos/1`,
+        `${baseURL}/todos/${id}`,
         { todo: {id, title, done} }).then((response) => {
           setTodos(response.data.Todos)
         }).catch((error) => {
