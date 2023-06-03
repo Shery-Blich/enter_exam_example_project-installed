@@ -14,12 +14,21 @@ const port = 3080;
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
-app.use(cors());
-
 const corsOptions = {
     origin: `${baseUrl.client}`,
     credentials: true
 }
+
+app.use(cors(corsOptions));
+
+app.put('/todos/:id', cors(corsOptions), (req, res) => {
+    const {todo} = req.body;
+
+    Todos[todo.id] = {id: todo.id, title: todo.title, done: todo.done};
+
+    res.send({Todos}).status(200).end()
+});
+
 
 app.get("/", cors(corsOptions), (req, res) => {
     res.send("Welcome to your Wix Enter exam!");

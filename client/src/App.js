@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "axios";
 
 const App = () => {
-  axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = false;
   const baseURL = "http://localhost:3080";
 
   const [userId, setUserId] = useState([]);
@@ -22,6 +22,17 @@ const App = () => {
       .then((response) => setTodos(response.data.Todos))
       .catch((error) => console.error(error));
   };
+
+  const putTodo = (id, title, done) => {
+    axios
+      .put(
+        `${baseURL}/todos/1`,
+        { todo: {id, title, done} }).then((response) => {
+          setTodos(response.data.Todos)
+        }).catch((error) => {
+          console.log(error);
+        });
+  }
 
   const addTodo = (title) => {
     axios
@@ -57,6 +68,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <button onClick={() => putTodo(1,"Howdy!", false)}>Click me to put the first one!</button>
       <Router>
         <Routes>
           <Route
