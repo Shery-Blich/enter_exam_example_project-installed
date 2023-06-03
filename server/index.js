@@ -6,17 +6,19 @@ var bodyParser = require('body-parser')
 const cors = require('cors');
 
 const {baseUrl} = require('../constants');
+const cookieParser = require("cookie-parser");
 
 const port = 3080;
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
+app.use(cors());
+
 const corsOptions = {
     origin: `${baseUrl.client}`,
     credentials: true
 }
-
-app.use(cors(corsOptions));
 
 app.put('/todos/:id', cors(corsOptions), (req, res) => {
     const {todo} = req.body;
@@ -49,7 +51,7 @@ app.post('/todos', cors(corsOptions), (req, res) => {
     }
 
     const newTodo = {
-        title, id: Todos.length + 1
+        title, id: uuidv4()
     }
     Todos.push(newTodo);
     res.send({todo: newTodo}).status(200).end()
