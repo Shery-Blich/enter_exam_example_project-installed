@@ -24,7 +24,8 @@ app.use(cors(corsOptions));
 app.put('/todos/:id', cors(corsOptions), (req, res) => {
     const {todo} = req.body;
 
-    Todos[todo.id] = {id: todo.id, title: todo.title, done: todo.done};
+    Todos[todo.id].title = todo.title;
+    Todos[todo.id].done = todo.done;
 
     res.send({Todos}).status(200).end()
 });

@@ -73,7 +73,7 @@ const App = () => {
         <Routes>
           <Route
             path="/"
-            element={<TodoList todos={todos} addTodo={addTodo} />}
+            element={<TodoList todos={todos} addTodo={addTodo} updateToDo={putTodo}/>}
           />
         </Routes>
       </Router>

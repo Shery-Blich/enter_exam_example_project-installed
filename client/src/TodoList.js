@@ -1,6 +1,5 @@
 // TodoList.js
 import React, { useState } from "react";
-import axios from "axios";
 import "./TodoList.css";
 import {
   Button,
@@ -11,14 +10,10 @@ import {
   ListItemText,
   TextField,
   Typography,
-  ToggleButtonGroup,
   ToggleButton,
-  Divider,
 } from "@mui/material";
 
-const TodoList = ({ todos, addTodo }) => {
-  axios.defaults.withCredentials = true;
-
+const TodoList = ({ todos, addTodo, updateToDo }) => {
   const [newTitle, setNewTitle] = useState([]);
 
   return (
@@ -49,22 +44,18 @@ const TodoList = ({ todos, addTodo }) => {
               className={todo.done ? "done" : "todo"}
             >
               <ListItemText
-                primary={todo.title}
+                primary={todo.title + " - " + todo.id}
                 secondary={todo.author}
                 data-testid={`todoListing-todo-${todo.id}`}
               />
-              <ToggleButtonGroup
+              <ToggleButton
                 color="primary"
                 value={todo.done ? "done" : "todo"}
                 exclusive
-                onChange={() =>
-                  alert("Excercise - Try to get this to change the done status")
-                }
-              >
-
-                <ToggleButton value="done">Done</ToggleButton>
-                <ToggleButton value="todo">Todo</ToggleButton>
-              </ToggleButtonGroup>
+                onChange={() => {
+                    updateToDo(todo.id - 1, todo.title, !todo.done);
+                }}
+              >{todo.done ? "To do" : "Done"} </ToggleButton>
             </ListItem>
           ))}
         </List>
@@ -85,7 +76,7 @@ const TodoList = ({ todos, addTodo }) => {
         <Button
           variant="contained"
           color="primary"
-          onClick={(e) => addTodo(newTitle)}
+          onClick={() => addTodo(newTitle)}
           data-testid={`todoList-addTodo-submitBtn`}
         >
           Submit TODO
