@@ -5,8 +5,11 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import axios from "axios";
 
 const App = () => {
-  axios.defaults.withCredentials = true;
   const baseURL = "http://localhost:3080";
+  const client = axios.create({
+      baseURL: baseURL,
+      withCredentials: true,
+    });
 
   const [todos, setTodos] = useState([]);
 
@@ -15,16 +18,13 @@ const App = () => {
   }, []);
 
   const getTodos = () => {
-    axios
-      .get(`${baseURL}/todos`)
+      client.get(`/todos`)
       .then((response) => setTodos(response.data.Todos))
       .catch((error) => console.error(error));
   };
 
   const putTodo = (id, title, done) => {
-    axios
-      .put(
-        `${baseURL}/todos/${id}`,
+      client.put(`/todos/${id}`,
         { todo: {id, title, done} }).then((response) => {
           setTodos(response.data.Todos)
         }).catch((error) => {
@@ -33,9 +33,7 @@ const App = () => {
   }
 
   const addTodo = (title) => {
-    axios
-      .post(
-        `${baseURL}/todos`,
+      client.post(`/todos`,
         {
           todo: { title, done: false },
         },

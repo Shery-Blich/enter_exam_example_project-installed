@@ -8,14 +8,13 @@ const cors = require('cors');
 const {baseUrl} = require('../constants');
 
 const port = 3080;
-
-app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
 const corsOptions = {
     origin: `${baseUrl.client}`,
     credentials: true
 }
 
+app.use(express.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors(corsOptions));
 
 app.put('/todos/:id', cors(corsOptions), (req, res) => {
