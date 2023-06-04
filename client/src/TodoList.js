@@ -14,7 +14,7 @@ import {
   ToggleButton,
 } from "@mui/material";
 
-const TodoList = ({ todos, addTodo, updateToDo }) => {
+const TodoList = ({ todos, addTodo, updateToDo, removeToDo }) => {
   const [newTitle, setNewTitle] = useState([]);
 
   return (
@@ -49,12 +49,13 @@ const TodoList = ({ todos, addTodo, updateToDo }) => {
                 secondary={todo.author}
                 data-testid={`todoListing-todo-${todo.id}`}
               />
+                <Button onClick={() => removeToDo(todo.id)}> X </Button>
               <ToggleButtonGroup
                 color="primary"
                 value={todo.done ? "done" : "todo"}
                 exclusive
                 onChange={() => {
-                    updateToDo(todo.id - 1, todo.title, !todo.done);
+                    updateToDo(todo.id, todo.title, !todo.done);
                 }}
               >
 

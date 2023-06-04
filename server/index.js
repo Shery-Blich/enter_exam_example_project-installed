@@ -6,6 +6,7 @@ var bodyParser = require('body-parser')
 const cors = require('cors');
 
 const {baseUrl} = require('../constants');
+let lastId = 3;
 
 const port = 3080;
 const corsOptions = {
@@ -17,11 +18,21 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors(corsOptions));
 
+app.delete('/todos/:id', cors(corsOptions), (req, res) => {
+    const id = req.params.id;
+    const indexToEdit = Todos.findIndex(td => td.id === id);
+
+    Todos.splice(indexToEdit, 1);
+    res.send({Todos}).status(200).end()
+});
+
 app.put('/todos/:id', cors(corsOptions), (req, res) => {
     const {todo} = req.body;
+    const indexToEdit = Todos.findIndex(td => td.id === todo.id);
 
-    Todos[todo.id].title = todo.title;
-    Todos[todo.id].done = todo.done;
+    Todos[indexToEdit].title = todo.title;
+    Todos[indexToEdit].done = todo.done;
+
 
     res.send({Todos}).status(200).end()
 });
@@ -47,8 +58,9 @@ app.post('/todos', cors(corsOptions), (req, res) => {
         return;
     }
 
+    lastId++
     const newTodo = {
-        title, id: Todos.length + 1
+        id: lastId, title: title, done: false
     }
     Todos.push(newTodo);
     res.send({todo: newTodo}).status(200).end()

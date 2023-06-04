@@ -51,13 +51,22 @@ const App = () => {
       });
   };
 
-  return (
+    const removeToDo = (id) => {
+        client.delete(`/todos/${id}`)
+            .then((response) => {
+                setTodos(response.data.Todos)
+            })
+            .catch((error) => {
+            console.log(error);
+        });
+    };
+    return (
     <div className="App">
       <Router>
         <Routes>
           <Route
             path="/"
-            element={<TodoList todos={todos} addTodo={addTodo} updateToDo={putTodo}/>}
+            element={<TodoList todos={todos} addTodo={addTodo} updateToDo={putTodo} removeToDo = {removeToDo}/>}
           />
         </Routes>
       </Router>
