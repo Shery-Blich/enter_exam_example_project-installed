@@ -35,7 +35,7 @@ const App = () => {
   const addTodo = (title) => {
       client.post(`/todos`,
         {
-          todo: { title, done: false },
+          todo: { title: title, done: false },
         },
         {
           headers: {
